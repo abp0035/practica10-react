@@ -4,12 +4,7 @@ import HomePage from './pages/HomePage';
 import SearchPage from './pages/SearchPage';
 import GameDetailPage from './pages/GameDetailPage';
 
-// Placeholder while implementing other pages
-const Placeholder = ({ title }) => (
-  <div className="flex items-center justify-center min-h-[50vh]">
-    <h2 className="text-3xl font-bold text-text-secondary">{title} Coming Soon</h2>
-  </div>
-);
+
 
 function App() {
   return (

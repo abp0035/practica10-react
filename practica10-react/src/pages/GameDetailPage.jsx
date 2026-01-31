@@ -15,6 +15,8 @@ const GameDetailPage = () => {
             .then(res => {
                 setGame(res.data);
                 setLoading(false);
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                setIsFavorite(favorites.includes(String(id)));
             })
             .catch(err => {
                 console.error("Error fetching details:", err);
@@ -23,6 +25,17 @@ const GameDetailPage = () => {
     }, [id]);
 
     const toggleFavorite = () => {
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const gameId = String(id);
+
+        let newFavorites;
+        if (isFavorite) {
+            newFavorites = favorites.filter(favId => favId !== gameId);
+        } else {
+            newFavorites = [...favorites, gameId];
+        }
+
+        localStorage.setItem('favorites', JSON.stringify(newFavorites));
         setIsFavorite(!isFavorite);
     };
 
@@ -49,7 +62,6 @@ const GameDetailPage = () => {
 
     return (
         <div className="animate-in fade-in duration-700 pb-20">
-            {/* FULL WIDTH BANNER */}
             <div className="relative w-full h-[60vh] min-h-[400px]">
                 <img
                     src={game.background_image}
@@ -59,7 +71,6 @@ const GameDetailPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-bg-main via-bg-main/40 to-transparent"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-bg-main/70 via-transparent to-transparent"></div>
 
-                {/* Banner Content */}
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">
                     <div className="container mx-auto">
                         <button
@@ -98,19 +109,16 @@ const GameDetailPage = () => {
                 </div>
             </div>
 
-            {/* MAIN CONTENT CONTAINER */}
             <div className="container mx-auto px-4 -mt-8 relative z-10">
                 <div className="grid lg:grid-cols-[1fr_350px] gap-10">
 
-                    {/* Left Column: Description & Actions */}
                     <div className="space-y-10">
-                        {/* Action Bar */}
                         <div className="flex flex-wrap items-center gap-4">
                             <button
                                 onClick={toggleFavorite}
                                 className={`flex-1 md:flex-none px-8 py-4 rounded-xl font-bold text-lg transition-all transform active:scale-95 flex items-center justify-center gap-3 shadow-xl ${isFavorite
-                                        ? 'bg-status-error text-white hover:bg-red-600 ring-4 ring-red-500/20'
-                                        : 'bg-white text-bg-main hover:bg-gray-100'
+                                    ? 'bg-status-error text-white hover:bg-red-600 ring-4 ring-red-500/20'
+                                    : 'bg-white text-bg-main hover:bg-gray-100'
                                     }`}
                             >
                                 <svg className={`h-6 w-6 transition-transform ${isFavorite ? 'fill-current scale-110' : 'fill-none scale-100'}`} viewBox="0 0 24 24" stroke="currentColor">
@@ -131,7 +139,6 @@ const GameDetailPage = () => {
                             )}
                         </div>
 
-                        {/* Description */}
                         <div>
                             <h3 className="text-2xl font-bold text-text-main mb-6 flex items-center gap-3 border-b border-bg-tertiary pb-4">
                                 <span className="w-2 h-8 bg-accent-pink rounded-full"></span>
@@ -144,7 +151,6 @@ const GameDetailPage = () => {
                         </div>
                     </div>
 
-                    {/* Right Column: Sidebar Stats */}
                     <div className="space-y-6">
                         <div className="bg-bg-secondary rounded-3xl p-8 border border-bg-tertiary space-y-8 sticky top-24 shadow-2xl">
                             <h3 className="text-xl font-bold text-text-main border-b border-bg-tertiary pb-4 flex items-center gap-2">

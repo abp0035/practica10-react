@@ -4,10 +4,9 @@ const GameCard = ({ game }) => {
     return (
         <Link to={`/game/${game.id}`} className="block group h-full">
             <div className="bg-bg-secondary rounded-2xl overflow-hidden shadow-lg border border-bg-tertiary transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-accent-purple/20 group-hover:border-accent-purple/50 h-full flex flex-col">
-                {/* Image Container */}
                 <div className="relative aspect-video overflow-hidden">
                     <img
-                        src={game.background_image || 'https://via.placeholder.com/600x400?text=No+Image'}
+                        src={game.background_image || 'https://via.placeholder.com/600x400?text=Sin+Imagen'}
                         alt={game.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
@@ -18,7 +17,6 @@ const GameCard = ({ game }) => {
                     </div>
                 </div>
 
-                {/* Content */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
                         <h3 className="text-lg font-bold text-text-main group-hover:text-accent-purple transition-colors line-clamp-1 mb-2">
@@ -36,11 +34,11 @@ const GameCard = ({ game }) => {
                     <div className="mt-4 pt-3 border-t border-bg-tertiary flex justify-between items-center text-sm text-text-muted">
                         <span className="flex items-center gap-1">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            {game.released ? game.released.split('-')[0] : 'TBA'}
+                            {game.released ? game.released.split('-')[0] : 'A confirmar'}
                         </span>
                         {game.metacritic && (
                             <span className={`px-2 py-0.5 rounded text-xs font-bold text-bg-main ${game.metacritic >= 75 ? 'bg-status-success' :
-                                    game.metacritic >= 50 ? 'bg-status-warning' : 'bg-status-error'
+                                game.metacritic >= 50 ? 'bg-status-warning' : 'bg-status-error'
                                 }`}>
                                 {game.metacritic}
                             </span>

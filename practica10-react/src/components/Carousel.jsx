@@ -41,19 +41,16 @@ const Carousel = () => {
 
     return (
         <div className="relative w-full h-[450px] md:h-[600px] rounded-3xl overflow-hidden border border-bg-tertiary shadow-2xl group">
-            {/* Background Image */}
             <div className="absolute inset-0">
                 <img
                     src={currentGame.background_image}
                     alt={currentGame.name}
                     className="w-full h-full object-cover transition-opacity duration-1000"
                 />
-                {/* Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-bg-main via-bg-main/60 to-transparent"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-bg-main/80 via-transparent to-transparent"></div>
             </div>
 
-            {/* Content */}
             <div className="absolute bottom-0 left-0 p-8 md:p-16 w-full md:w-2/3 lg:w-1/2 z-10 space-y-4">
                 <span className="inline-block px-3 py-1 bg-accent-purple text-bg-main font-black text-xs uppercase tracking-widest rounded-full">
                     Tendencia
@@ -67,7 +64,7 @@ const Carousel = () => {
                         {currentGame.rating}
                     </span>
                     <span className="text-text-secondary">|</span>
-                    <span className="text-text-secondary uppercase">{currentGame.released ? currentGame.released.split('-')[0] : 'N/A'}</span>
+                    <span className="text-text-secondary uppercase">{currentGame.released ? currentGame.released.split('-')[0] : 'N/D'}</span>
                 </div>
 
                 <Link
@@ -78,9 +75,7 @@ const Carousel = () => {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                 </Link>
             </div>
-
-            {/* Controls */}
-            <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-8 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button
                     onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + games.length) % games.length)}
                     className="p-3 rounded-full bg-bg-secondary/40 backdrop-blur-md border border-bg-tertiary text-text-main hover:bg-accent-purple hover:border-accent-purple transition-all"
@@ -88,7 +83,7 @@ const Carousel = () => {
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7" /></svg>
                 </button>
             </div>
-            <div className="absolute top-1/2 -translate-y-1/2 right-4 md:right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute top-1/2 -translate-y-1/2 right-4 md:right-8 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button
                     onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % games.length)}
                     className="p-3 rounded-full bg-bg-secondary/40 backdrop-blur-md border border-bg-tertiary text-text-main hover:bg-accent-purple hover:border-accent-purple transition-all"
@@ -97,7 +92,6 @@ const Carousel = () => {
                 </button>
             </div>
 
-            {/* Indicators */}
             <div className="absolute bottom-8 right-8 md:right-16 flex gap-2">
                 {games.map((_, index) => (
                     <button

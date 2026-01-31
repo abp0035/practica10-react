@@ -18,7 +18,7 @@ const SearchPage = () => {
 
         const fetchPromise = searchTerm
             ? searchGames(searchTerm)
-            : getPopularGames(); // Si no hay búsqueda, mostramos populares (Galería por defecto)
+            : getPopularGames(); 
 
         fetchPromise
             .then(res => {
@@ -42,7 +42,6 @@ const SearchPage = () => {
 
     return (
         <div className="space-y-10 animate-in fade-in duration-500">
-            {/* Header de la Galería */}
             <div className="text-center space-y-6 pt-8 pb-4">
                 <h1 className="text-4xl md:text-5xl font-black text-text-main tracking-tight">
                     {query ? (
@@ -57,7 +56,6 @@ const SearchPage = () => {
                 </div>
             </div>
 
-            {/* Resultados */}
             {loading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {[...Array(8)].map((_, i) => (

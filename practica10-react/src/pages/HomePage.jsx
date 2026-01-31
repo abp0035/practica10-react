@@ -1,20 +1,19 @@
 import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
+import SearchBar from '../components/SearchBar';
 
 const HomePage = () => {
     return (
         <div className="space-y-20 animate-in fade-in duration-700">
-            {/* Carousel Section */}
             <section>
                 <Carousel />
             </section>
 
-            {/* Features / Promo Section */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-10">
                 <div className="space-y-8">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent-cyan/10 border border-accent-cyan/20 rounded-full">
                         <span className="w-2 h-2 bg-accent-cyan rounded-full animate-pulse"></span>
-                        <span className="text-accent-cyan text-xs font-black uppercase tracking-widest">Nuevas Características</span>
+                        <span className="text-accent-cyan text-xs font-black uppercase tracking-widest">Descubre juegos populares</span>
                     </div>
 
                     <h2 className="text-4xl md:text-6xl font-black text-text-main leading-tight tracking-tight">
@@ -35,14 +34,11 @@ const HomePage = () => {
                             EXPLORAR TODO
                             <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </Link>
-                        <button className="bg-bg-secondary text-text-main font-black px-8 py-4 rounded-2xl border border-bg-tertiary hover:border-text-muted transition-all duration-300">
-                            VER CATEGORÍAS
-                        </button>
+
                     </div>
                 </div>
 
                 <div className="relative group">
-                    {/* Decorative Background for Image */}
                     <div className="absolute -inset-4 bg-gradient-to-tr from-accent-cyan to-accent-purple opacity-20 blur-3xl group-hover:opacity-30 transition-opacity"></div>
 
                     <div className="relative bg-bg-secondary border border-bg-tertiary p-3 rounded-[2.5rem] shadow-3xl overflow-hidden">
@@ -71,20 +67,18 @@ const HomePage = () => {
                 </div>
             </section>
 
-            {/* Quick Search Highlight */}
             <section className="bg-bg-secondary border border-bg-tertiary rounded-[3rem] p-10 md:p-20 text-center relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-accent-pink/10 blur-[100px] rounded-full"></div>
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-cyan/10 blur-[80px] rounded-full"></div>
 
                 <div className="relative z-10 max-w-2xl mx-auto space-y-6">
                     <h3 className="text-3xl md:text-5xl font-black text-text-main">¿Buscas algo específico?</h3>
-                    <p className="text-text-secondary font-medium">Usa nuestro buscador avanzado para filtrar por plataforma, género o puntuación de Metacritic.</p>
-                    <Link
-                        to="/search"
-                        className="inline-block px-10 py-5 bg-text-main text-bg-main font-black rounded-2xl hover:bg-accent-pink hover:text-text-main transition-all duration-300"
-                    >
-                        IR AL BUSCADOR
-                    </Link>
+                    <p className="text-text-secondary font-medium text-lg">
+                        Encuentra rápidamente tus juegos favoritos en nuestra inmensa colección.
+                    </p>
+                    <div className="w-full max-w-lg mx-auto transform hover:scale-105 transition-transform duration-300">
+                        <SearchBar />
+                    </div>
                 </div>
             </section>
         </div>

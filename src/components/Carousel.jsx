@@ -51,7 +51,7 @@ const Carousel = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-bg-main/80 via-transparent to-transparent"></div>
             </div>
 
-            <div className="absolute bottom-0 left-0 p-8 md:p-16 w-full md:w-2/3 lg:w-1/2 z-10 space-y-4">
+            <div className="absolute bottom-0 left-0 p-8 pl-14 md:p-16 md:pl-32 w-full md:w-2/3 lg:w-1/2 z-10 space-y-4">
                 <span className="inline-block px-3 py-1 bg-accent-purple text-bg-main font-black text-xs uppercase tracking-widest rounded-full">
                     Tendencia
                 </span>

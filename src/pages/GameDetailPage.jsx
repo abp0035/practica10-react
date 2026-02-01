@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getGameDetails } from '../services/rawgservice';
+import { getGameDetails } from '../services/rawgService';
 
 const GameDetailPage = () => {
     const { id } = useParams();
@@ -21,7 +21,7 @@ const GameDetailPage = () => {
     }, [id]);
 
     const toggleFavorite = () => {
-        
+
         const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
         const gameId = String(id);
 
@@ -73,7 +73,7 @@ const GameDetailPage = () => {
 
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">
                     <div className="container mx-auto">
-                       
+
 
                         <div className="flex flex-wrap items-center gap-3 mb-4">
                             {game.released && (

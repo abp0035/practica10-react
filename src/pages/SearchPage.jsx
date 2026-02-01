@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { searchGames, getPopularGames } from '../services/rawgservice';
+import { searchGames, getPopularGames } from '../services/rawgService';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
 
@@ -18,7 +18,7 @@ const SearchPage = () => {
 
         const fetchPromise = searchTerm
             ? searchGames(searchTerm)
-            : getPopularGames(); 
+            : getPopularGames();
 
         fetchPromise
             .then(res => {

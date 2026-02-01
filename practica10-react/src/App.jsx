@@ -14,7 +14,6 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="game/:id" element={<GameDetailPage />} />
-          <Route path="*" element={<Placeholder title="404 - Página no Encontrada" />} />
         </Route>
       </Routes>
     </BrowserRouter>

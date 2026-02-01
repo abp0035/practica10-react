@@ -25,11 +25,6 @@ const SearchPage = () => {
                 setGames(res.data.results);
                 setLoading(false);
             })
-            .catch(err => {
-                console.error("Error en búsqueda:", err);
-                setError("Hubo un problema obteniendo los juegos. Por favor intenta de nuevo.");
-                setLoading(false);
-            });
     };
 
     useEffect(() => {

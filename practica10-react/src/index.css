@@ -1,23 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  /* Fondos */
   --color-bg-main: #0a0a0a;
   --color-bg-secondary: #111827;
   --color-bg-tertiary: #1f2933;
 
-  /* Texto */
   --color-text-main: #e5e7eb;
   --color-text-secondary: #9ca3af;
   --color-text-muted: #6b7280;
 
-  /* Acentos */
   --color-accent-purple: #a855f7;
   --color-accent-green: #22c55e;
   --color-accent-pink: #ec4899;
   --color-accent-cyan: #22d3ee;
 
-  /* Estados */
   --color-status-rating: #facc15;
   --color-status-error: #ef4444;
   --color-status-warning: #f97316;

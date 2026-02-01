@@ -18,13 +18,10 @@ const GameDetailPage = () => {
                 const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
                 setIsFavorite(favorites.includes(String(id)));
             })
-            .catch(err => {
-                console.error("Error fetching details:", err);
-                setLoading(false);
-            });
     }, [id]);
 
     const toggleFavorite = () => {
+        
         const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
         const gameId = String(id);
 
@@ -61,6 +58,7 @@ const GameDetailPage = () => {
     );
 
     return (
+
         <div className="animate-in fade-in duration-700 pb-20">
             <div className="relative w-full h-[60vh] min-h-[400px]">
                 <img
@@ -68,18 +66,14 @@ const GameDetailPage = () => {
                     alt={game.name}
                     className="w-full h-full object-cover"
                 />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-bg-main via-bg-main/40 to-transparent"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-bg-main/70 via-transparent to-transparent"></div>
 
+
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">
                     <div className="container mx-auto">
-                        <button
-                            onClick={() => navigate(-1)}
-                            className="absolute top-10 left-4 md:left-10 mb-6 inline-flex items-center gap-2 text-white hover:text-accent-cyan transition-colors bg-black/30 backdrop-blur px-4 py-2 rounded-full border border-white/10 hover:bg-black/50"
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                            Volver
-                        </button>
+                       
 
                         <div className="flex flex-wrap items-center gap-3 mb-4">
                             {game.released && (
@@ -203,6 +197,19 @@ const GameDetailPage = () => {
                                     <div className="flex flex-col gap-1">
                                         {game.developers.map(d => (
                                             <span key={d.id} className="text-sm text-text-main font-medium">{d.name}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {game.tags?.length > 0 && (
+                                <div className="pt-6 border-t border-bg-tertiary">
+                                    <h4 className="text-text-muted text-xs uppercase tracking-widest font-bold mb-3">Etiquetas</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {game.tags.slice(0, 10).map(t => (
+                                            <span key={t.id} className="text-xs bg-bg-main/50 px-2 py-1 rounded text-text-secondary border border-white/5">
+                                                {t.name}
+                                            </span>
                                         ))}
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getPopularGames } from '../services/rawgService';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 const Carousel = () => {
     const [games, setGames] = useState([]);

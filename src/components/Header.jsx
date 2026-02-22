@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router';
 
 const Header = () => {
     return (
@@ -33,6 +33,14 @@ const Header = () => {
                         }
                     >
                         Explorar
+                    </NavLink>
+                    <NavLink
+                        to="/publishers"
+                        className={({ isActive }) =>
+                            `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
+                        }
+                    >
+                        Publishers
                     </NavLink>
                 </nav>
             </div>

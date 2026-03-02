@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router';
-import { getGamesByTag } from '../services/rawgService';
+import { getGamesByTag } from '../services/service';
 import GameCard from '../components/GameCard';
 import Pagination from '../components/Pagination';
 

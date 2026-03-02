@@ -1,42 +1,33 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router';
-import { getGameDetails } from '../services/rawgService';
+import { useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGameDetailsAsync, toggleFavorite, clearGameDetails } from '../store/slices/gamesSlice';
 
 const GameDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [game, setGame] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const dispatch = useDispatch();
+
+    const { gameDetails: game, status, error, favorites } = useSelector(state => state.games);
+
+    const isFavorite = game ? favorites.some(fav => String(fav.id) === String(game.id)) : false;
 
     useEffect(() => {
-        setLoading(true);
-        getGameDetails(id)
-            .then(res => {
-                setGame(res.data);
-                setLoading(false);
-                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                setIsFavorite(favorites.includes(String(id)));
-            })
-    }, [id]);
+        dispatch(fetchGameDetailsAsync(id));
 
-    const toggleFavorite = () => {
+        return () => {
+            dispatch(clearGameDetails());
+        };
+    }, [id, dispatch]);
 
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        const gameId = String(id);
-
-        let newFavorites;
-        if (isFavorite) {
-            newFavorites = favorites.filter(favId => favId !== gameId);
-        } else {
-            newFavorites = [...favorites, gameId];
+    const handleToggleFavorite = () => {
+        if (game) {
+            dispatch(toggleFavorite(game));
         }
-
-        localStorage.setItem('favorites', JSON.stringify(newFavorites));
-        setIsFavorite(!isFavorite);
     };
 
-    if (loading) return (
+
+    if (status === 'loading') return (
         <div className="flex justify-center items-center min-h-[60vh]">
             <div className="flex flex-col items-center gap-4">
                 <div className="w-16 h-16 border-4 border-bg-tertiary border-t-accent-purple rounded-full animate-spin"></div>
@@ -45,7 +36,7 @@ const GameDetailPage = () => {
         </div>
     );
 
-    if (!game) return (
+    if (status === 'failed' || (!game && status === 'idle')) return (
         <div className="text-center py-20">
             <h2 className="text-3xl font-bold mb-4 text-status-error">Juego no encontrado</h2>
             <button
@@ -109,7 +100,7 @@ const GameDetailPage = () => {
                     <div className="space-y-10">
                         <div className="flex flex-wrap items-center gap-4">
                             <button
-                                onClick={toggleFavorite}
+                                onClick={handleToggleFavorite}
                                 className={`flex-1 md:flex-none px-8 py-4 rounded-xl font-bold text-lg transition-all transform active:scale-95 flex items-center justify-center gap-3 shadow-xl ${isFavorite
                                     ? 'bg-status-error text-white hover:bg-red-600 ring-4 ring-red-500/20'
                                     : 'bg-white text-bg-main hover:bg-gray-100'

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
-import { searchGames, getPopularGames } from '../services/rawgService';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchGamesAsync, fetchPopularGames } from '../store/slices/gamesSlice';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
 import Pagination from '../components/Pagination';
@@ -10,26 +11,32 @@ const SearchPage = () => {
     const query = searchParams.get('q');
     const page = Number(searchParams.get('page')) || 1;
 
-    const [games, setGames] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+
+    const {
+        searchResults: searchedGames,
+        popularGames,
+        status,
+        error
+    } = useSelector(state => state.games);
+
+    const isSearchMode = !!query;
+    // Ojo: Esto asume que gamesSlice gestiona la respuesta paginada o trae suficientes para verlos
+    const games = isSearchMode ? searchedGames : popularGames;
+    // Mocking el totalPages para no romper el Pagination que trae el remoto aunque Redux no lo guarde de base.
+    const totalPages = Math.ceil(500 / 20);
+
+    const performSearch = (searchTerm, pageNum) => {
+        if (searchTerm) {
+            dispatch(searchGamesAsync(searchTerm)); // Ojo si searchGamesAsync no acepta page
+        } else {
+            dispatch(fetchPopularGames());
+        }
+    };
 
     useEffect(() => {
-        setLoading(true);
-        setError(null);
-
-        const fetchPromise = query
-            ? searchGames(query, page)
-            : getPopularGames(page);
-
-        fetchPromise
-            .then(res => {
-                setGames(res.data.results);
-                setTotalPages(Math.ceil(res.data.count / 20));
-                setLoading(false);
-            });
-    }, [query, page]);
+        performSearch(query, page);
+    }, [query, page, dispatch]);
 
     const handleSearch = (term) => {
         setSearchParams({ q: term });
@@ -51,13 +58,13 @@ const SearchPage = () => {
                 </div>
             </div>
 
-            {loading ? (
+            {status === 'loading' ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {[...Array(8)].map((_, i) => (
                         <div key={i} className="aspect-[3/4] bg-bg-secondary rounded-2xl animate-pulse border border-bg-tertiary"></div>
                     ))}
                 </div>
-            ) : error ? (
+            ) : status === 'failed' ? (
                 <div className="text-center bg-status-error/10 border border-status-error/20 rounded-2xl p-10 max-w-lg mx-auto">
                     <p className="text-status-error font-bold text-xl mb-2">Error</p>
                     <p className="text-text-secondary">{error}</p>

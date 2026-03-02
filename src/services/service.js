@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_RAWG_KEY;
-const BASE_URL = "https://api.rawg.io/api";
+const BASE_URL = "/api";
 
 export const getPopularGames = (page = 1) =>
     axios.get(`${BASE_URL}/games?key=${API_KEY}&ordering=-rating&page_size=20&page=${page}`);

@@ -7,6 +7,14 @@ import autoprefixer from 'autoprefixer';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://api.rawg.io',
+        changeOrigin: true,
+      }
+    }
+  },
   css: {
     postcss: {
       plugins: [

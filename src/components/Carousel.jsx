@@ -1,23 +1,20 @@
 import { useState, useEffect } from 'react';
-import { getPopularGames } from '../services/rawgService';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPopularGames } from '../store/slices/gamesSlice';
 import { Link } from 'react-router-dom';
 
 const Carousel = () => {
-    const [games, setGames] = useState([]);
+    const dispatch = useDispatch();
+    const { popularGames, status } = useSelector(state => state.games);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [loading, setLoading] = useState(true);
+
+    const games = popularGames.slice(0, 6);
 
     useEffect(() => {
-        getPopularGames()
-            .then(response => {
-                setGames(response.data.results.slice(0, 6));
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error("Error loading carousel games:", error);
-                setLoading(false);
-            });
-    }, []);
+        if (popularGames.length === 0 && status === 'idle') {
+            dispatch(fetchPopularGames());
+        }
+    }, [popularGames.length, status, dispatch]);
 
     useEffect(() => {
         if (games.length === 0) return;
@@ -27,7 +24,7 @@ const Carousel = () => {
         return () => clearInterval(interval);
     }, [games]);
 
-    if (loading) {
+    if (status === 'loading') {
         return (
             <div className="w-full h-[450px] md:h-[600px] bg-bg-secondary animate-pulse rounded-3xl border border-bg-tertiary flex items-center justify-center">
                 <span className="text-text-secondary font-bold">Cargando juegos destacados...</span>

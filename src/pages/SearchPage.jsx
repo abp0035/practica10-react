@@ -1,35 +1,36 @@
-import { useEffect, useState } from 'react'; 
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { searchGames, getPopularGames } from '../services/rawgService';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchGamesAsync, fetchPopularGames } from '../store/slices/gamesSlice';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('q');
+    const dispatch = useDispatch();
 
-    const [games, setGames] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const {
+        searchResults: searchedGames,
+        popularGames,
+        status,
+        error
+    } = useSelector(state => state.games);
+
+    const isSearchMode = !!query;
+    const games = isSearchMode ? searchedGames : popularGames;
 
     const performSearch = (searchTerm) => {
-        setLoading(true);
-        setError(null);
-
-        const fetchPromise = searchTerm
-            ? searchGames(searchTerm)
-            : getPopularGames();
-
-        fetchPromise
-            .then(res => {
-                setGames(res.data.results);
-                setLoading(false);
-            })
+        if (searchTerm) {
+            dispatch(searchGamesAsync(searchTerm));
+        } else {
+            dispatch(fetchPopularGames());
+        }
     };
 
     useEffect(() => {
         performSearch(query);
-    }, [query]);
+    }, [query, dispatch]);
 
     const handleSearch = (term) => {
         setSearchParams({ q: term });
@@ -51,13 +52,13 @@ const SearchPage = () => {
                 </div>
             </div>
 
-            {loading ? (
+            {status === 'loading' ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {[...Array(8)].map((_, i) => (
                         <div key={i} className="aspect-[3/4] bg-bg-secondary rounded-2xl animate-pulse border border-bg-tertiary"></div>
                     ))}
                 </div>
-            ) : error ? (
+            ) : status === 'failed' ? (
                 <div className="text-center bg-status-error/10 border border-status-error/20 rounded-2xl p-10 max-w-lg mx-auto">
                     <p className="text-status-error font-bold text-xl mb-2">Error</p>
                     <p className="text-text-secondary">{error}</p>

@@ -7,10 +7,10 @@ const Header = () => {
     return (
         <header className="bg-bg-secondary border-b border-bg-tertiary sticky top-0 z-50">
             <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div className="flex items-center justify-between w-full md:w-auto gap-8">
+                <div className="flex-1">
                     <Link
                         to="/"
-                        className="text-2xl font-black tracking-tighter text-text-main flex items-center gap-2 group"
+                        className="text-2xl font-black tracking-tighter text-text-main flex items-center gap-2 group w-fit"
                     >
                         <span className="bg-accent-cyan p-1.5 rounded-xl group-hover:bg-accent-purple transition-all duration-500 shadow-lg shadow-accent-cyan/20 group-hover:shadow-accent-purple/40 group-hover:rotate-12">
                             <svg className="w-6 h-6 text-bg-main" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -20,44 +20,44 @@ const Header = () => {
                         </span>
                         GAME<span className="text-accent-cyan group-hover:text-accent-purple transition-colors duration-500">SCOPE</span>
                     </Link>
-
-                    <nav className="flex items-center gap-4 md:gap-6">
-                        <NavLink
-                            to="/"
-                            className={({ isActive }) =>
-                                `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
-                            }
-                        >
-                            Inicio
-                        </NavLink>
-                        <NavLink
-                            to="/search"
-                            className={({ isActive }) =>
-                                `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
-                            }
-                        >
-                            Explorar
-                        </NavLink>
-                        <NavLink
-                            to="/events"
-                            className={({ isActive }) =>
-                                `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
-                            }
-                        >
-                            Eventos
-                        </NavLink>
-                        <NavLink
-                            to="/publishers"
-                            className={({ isActive }) =>
-                                `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
-                            }
-                        >
-                            Publishers
-                        </NavLink>
-                    </nav>
                 </div>
 
-                <div className="relative">
+                <nav className="flex-1 flex justify-center items-center gap-4 md:gap-8 hidden md:flex">
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                            `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
+                        }
+                    >
+                        Inicio
+                    </NavLink>
+                    <NavLink
+                        to="/search"
+                        className={({ isActive }) =>
+                            `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
+                        }
+                    >
+                        Explorar
+                    </NavLink>
+                    <NavLink
+                        to="/events"
+                        className={({ isActive }) =>
+                            `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
+                        }
+                    >
+                        Eventos
+                    </NavLink>
+                    <NavLink
+                        to="/publishers"
+                        className={({ isActive }) =>
+                            `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
+                        }
+                    >
+                        Publishers
+                    </NavLink>
+                </nav>
+
+                <div className="relative flex-1 flex justify-end">
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="flex items-center gap-2 focus:outline-none"

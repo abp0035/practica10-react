@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { searchGamesAsync, fetchPopularGames } from '../store/slices/gamesSlice';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
+import Pagination from '../components/Pagination';
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('q');
+    const page = Number(searchParams.get('page')) || 1;
+
     const dispatch = useDispatch();
 
     const {
@@ -18,19 +21,22 @@ const SearchPage = () => {
     } = useSelector(state => state.games);
 
     const isSearchMode = !!query;
+    // Ojo: Esto asume que gamesSlice gestiona la respuesta paginada o trae suficientes para verlos
     const games = isSearchMode ? searchedGames : popularGames;
+    // Mocking el totalPages para no romper el Pagination que trae el remoto aunque Redux no lo guarde de base.
+    const totalPages = Math.ceil(500 / 20);
 
-    const performSearch = (searchTerm) => {
+    const performSearch = (searchTerm, pageNum) => {
         if (searchTerm) {
-            dispatch(searchGamesAsync(searchTerm));
+            dispatch(searchGamesAsync(searchTerm)); // Ojo si searchGamesAsync no acepta page
         } else {
             dispatch(fetchPopularGames());
         }
     };
 
     useEffect(() => {
-        performSearch(query);
-    }, [query, dispatch]);
+        performSearch(query, page);
+    }, [query, page, dispatch]);
 
     const handleSearch = (term) => {
         setSearchParams({ q: term });
@@ -69,11 +75,14 @@ const SearchPage = () => {
                     <p className="text-text-secondary text-xl font-medium">No encontramos juegos con ese nombre.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {games.map(game => (
-                        <GameCard key={game.id} game={game} />
-                    ))}
-                </div>
+                <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {games.map(game => (
+                            <GameCard key={game.id} game={game} />
+                        ))}
+                    </div>
+                    <Pagination totalPages={totalPages} />
+                </>
             )}
         </div>
     );

@@ -62,46 +62,32 @@ const Header = () => {
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="flex items-center gap-2 focus:outline-none"
                     >
-<<<<<<< HEAD
-<div className="w-10 h-10 rounded-full border-2 border-accent-cyan hover:border-accent-purple transition-colors bg-bg-tertiary flex items-center justify-center text-text-main font-black text-xl">
-    A
-</div>
-                    </button >
+                        <div className="w-10 h-10 rounded-full border-2 border-accent-cyan hover:border-accent-purple transition-colors bg-bg-tertiary flex items-center justify-center text-text-main font-black text-xl">
+                            A
+                        </div>
+                    </button>
 
-    { isMenuOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-bg-secondary rounded-xl shadow-lg border border-bg-tertiary py-2 z-50">
-            <Link
-                to="/favorites"
-                className="block px-4 py-2 font-medium text-text-secondary hover:text-accent-cyan hover:bg-bg-tertiary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-            >
-                Mis Favoritos
-            </Link>
-            <Link
-                to="/my-events"
-                className="block px-4 py-2 font-medium text-text-secondary hover:text-accent-purple hover:bg-bg-tertiary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-            >
-                Mis Eventos
-            </Link>
-        </div>
-    )}
-                </div >
-=======
-                        Explorar
-                    </NavLink>
-                    <NavLink
-                        to="/publishers"
-                        className={({ isActive }) =>
-                            `font-bold transition-colors ${isActive ? 'text-accent-purple' : 'text-text-secondary hover:text-text-main'}`
-                        }
-                    >
-                        Publishers
-                    </NavLink>
-                </nav>
->>>>>>> 6dbe6d7810fc5109a1d051de86427518ca7789a2
-            </div >
-        </header >
+                    {isMenuOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-bg-secondary rounded-xl shadow-lg border border-bg-tertiary py-2 z-50">
+                            <Link
+                                to="/favorites"
+                                className="block px-4 py-2 font-medium text-text-secondary hover:text-accent-cyan hover:bg-bg-tertiary transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Mis Favoritos
+                            </Link>
+                            <Link
+                                to="/my-events"
+                                className="block px-4 py-2 font-medium text-text-secondary hover:text-accent-purple hover:bg-bg-tertiary transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Mis Eventos
+                            </Link>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </header>
     );
 };
 

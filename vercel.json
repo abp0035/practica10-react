@@ -3,8 +3,8 @@
     "outputDirectory": "dist",
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "https://api.rawg.io/api/$1"
+            "source": "/api/:path*",
+            "destination": "https://api.rawg.io/api/:path*"
         },
         {
             "source": "/(.*)",
